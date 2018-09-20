@@ -1,0 +1,19 @@
+---
+- hosts: production
+
+  tasks:
+   
+    - name: store mysql root password
+      copy: src=root/.my.cnf dest=/root/.my.cnf
+
+    - name: Create database user
+      mysql_user: user=bob password=Mydatabaser00t-- priv=*.*:ALL state=present
+    
+    - name: drop database
+      mysql_db: db=bobdata state=absent
+    
+    - name: Create database
+      mysql_db: db=bobdata state=present
+
+    - name: Ensure no user named 'sally' exists and delete if found.
+      mysql_user: user=sally state=absent

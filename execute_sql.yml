@@ -1,0 +1,13 @@
+---
+- hosts: production
+
+  tasks:  
+  - name: Copy database dump file
+    copy:
+      src: script.sql
+      dest: /tmp
+  - name: Restore database
+    mysql_db:
+      name: bobdata
+      state: import
+      target: /tmp/script.sql
